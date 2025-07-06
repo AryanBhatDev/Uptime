@@ -1,11 +1,11 @@
+import type { Request, Response } from "express";
+import { userService } from "../services/user.service";
 
-import type { Request, Response } from "express"
 
-
-
-export const websiteController = async(req:Request,res:Response)=>{
-    res.status(200).json({
-        msg:"website"
+export const userSignup = async(req:Request,res:Response)=>{
+    await userService.signup(req.body)
+    
+    res.status(201).json({
+        msg:"Signup successful"
     })
-    return
 }
