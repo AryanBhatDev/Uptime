@@ -5,4 +5,5 @@ export const WebsiteSchema = z.object({
   user_id: z.string(),
 });
 
+
 export type WebsiteInput = z.infer<typeof WebsiteSchema>;
