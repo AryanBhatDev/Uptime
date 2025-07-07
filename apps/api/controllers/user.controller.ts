@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { userService } from "../services/user.service";
-import { userSignupSchema } from "@repo/zod-schemas";
+import { userSigninSchema, userSignupSchema } from "@repo/zod-schemas";
 
 
 export const userSignup = async(req:Request,res:Response)=>{
@@ -26,6 +26,51 @@ export const userSignup = async(req:Request,res:Response)=>{
         if ( e instanceof Error){
             if (e.message.includes('already in use')){
                 res.status(409).json({
+                    msg: e.message
+                })
+                return
+            }
+        }
+        
+        res.status(500).json({
+            msg:"Internal Server Error"
+        })
+    }  
+}
+
+export const userSignin = async(req:Request,res:Response)=>{
+    try{
+
+        const payload = req.body
+        const validatedPayload = userSigninSchema.safeParse(payload)
+
+        if(!validatedPayload.success){
+            res.status(403).json({
+                msg:"Invalid inputs"
+            })
+            return
+        }
+
+        const userId = req.user?._id
+
+        if (!userId){
+            res.status(401).json({
+                msg:"Invalid token"
+            })
+            return
+        }
+
+        const token = await userService.signin(userId,validatedPayload.data.password)
+        
+        res.status(201).json({
+            msg:"Signin successful",
+            token
+        })
+    }catch(e){
+        
+        if ( e instanceof Error){
+            if (e.message.includes('not valid')){
+                res.status(401).json({
                     msg: e.message
                 })
                 return

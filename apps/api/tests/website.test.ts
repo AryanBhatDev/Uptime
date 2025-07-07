@@ -4,6 +4,6 @@ import { app } from '..'
 
 describe("Website gets created",()=>{
     it("website not created if url is not present",async()=>{
-        const res = await request(app).post("/website").send({})
+        const res = await request(app).post("/api/v1/website").send({})
     })
 })
