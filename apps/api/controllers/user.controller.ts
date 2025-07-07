@@ -16,10 +16,11 @@ export const userSignup = async(req:Request,res:Response)=>{
             return
         }
 
-        const response = await userService.signup(validatedPayload.data)
+        const token = await userService.signup(validatedPayload.data)
         
         res.status(201).json({
-            msg:`Signup successful for ${response.mail}`
+            msg:"Signup successful",
+            token
         })
     }catch(e){
         
@@ -62,7 +63,7 @@ export const userSignin = async(req:Request,res:Response)=>{
 
         const token = await userService.signin(userId,validatedPayload.data.password)
         
-        res.status(201).json({
+        res.status(200).json({
             msg:"Signin successful",
             token
         })

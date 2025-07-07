@@ -23,8 +23,9 @@ class UserService{
                 password:hashedPassword
             }
         })
+        const token = jwt.sign({id:createUser.id},process.env.JWT_SECRET)
         return {
-            mail:createUser.email
+            token
         }
     }
     async signin(id:string,password:string):Promise<Record<string,string>>{
