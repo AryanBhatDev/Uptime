@@ -35,9 +35,6 @@ class WebsiteService{
     }
 
     async websiteStatus(websiteId: string,userId:string):Promise<Record<string,WebsiteWithTicks>>{
-        
-        console.log("websiteId",websiteId)
-        console.log("userId",userId)
 
         const status = await prisma.website.findFirst({
             where:{
@@ -54,8 +51,6 @@ class WebsiteService{
                 }
             }
         })
-
-        console.log("status",status)
 
         if(!status){
             throw new Error("Invalid website id")
