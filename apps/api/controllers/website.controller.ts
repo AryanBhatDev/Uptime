@@ -9,7 +9,7 @@ export const addWebsite = async(req:Request,res:Response,next:NextFunction):Prom
         const validatedPayload = WebsiteSchema.safeParse(payload)
 
         if(!validatedPayload.success){
-            res.status(403).json({
+            res.status(400).json({
                 msg:"Invalid inputs"
             })
             return
@@ -57,13 +57,13 @@ export const websiteStatus = async(req:Request,res:Response,next:NextFunction):P
 
         const response = await websiteService.websiteStatus(websiteId,userId);
 
-        res.status(201).json({
+        res.status(200).json({
             response
         })
     }catch(e){
         if (e instanceof Error){
             if ( e.message.includes("Invalid")){
-                res.status(409).json({
+                res.status(404).json({
                     msg: e.message
                 })
                 return

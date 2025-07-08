@@ -11,7 +11,7 @@ describe("user gets created", () => {
     })
     it("user not created with empty request body", async () => {
         const res = await request(app).post("/api/v1/user/signup").send({})
-        expect(res.status).toBe(403)
+        expect(res.status).toBe(400)
         expect(res.body.msg).toBe("Invalid inputs")
     })
 
@@ -20,7 +20,7 @@ describe("user gets created", () => {
             email: "invalid-email",
             password: "ValidPass123!"
         })
-        expect(res.status).toBe(403)
+        expect(res.status).toBe(400)
         expect(res.body.msg).toBe("Invalid inputs")
     })
 
@@ -29,7 +29,7 @@ describe("user gets created", () => {
             email: "test@example.com",
             password: "weakpass"
         })
-        expect(res.status).toBe(403)
+        expect(res.status).toBe(400)
         expect(res.body.msg).toBe("Invalid inputs")
     })
 
@@ -90,7 +90,7 @@ describe("user signin", () => {
             .set('Authorization', `Bearer ${validToken}`)
             .send({})
         
-        expect(res.status).toBe(403)
+        expect(res.status).toBe(400)
         expect(res.body.msg).toBe("Invalid inputs")
     })
 

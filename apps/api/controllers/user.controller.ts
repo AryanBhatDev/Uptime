@@ -10,7 +10,7 @@ export const userSignup = async(req:Request,res:Response,next:NextFunction)=>{
         const validatedPayload = userSignupSchema.safeParse(payload)
 
         if(!validatedPayload.success){
-            res.status(403).json({
+            res.status(400).json({
                 msg:"Invalid inputs"
             })
             return
@@ -44,7 +44,7 @@ export const userSignin = async(req:Request,res:Response,next:NextFunction)=>{
         const validatedPayload = userSigninSchema.safeParse(payload)
 
         if(!validatedPayload.success){
-            res.status(403).json({
+            res.status(400).json({
                 msg:"Invalid inputs"
             })
             return
