@@ -1,8 +1,10 @@
 
 import { Router } from "express";
-import { websiteController } from "../controllers/website.controller";
+import { addWebsite, websiteStatus } from "../controllers/website.controller";
+import { authMiddleware } from "../middlewares/auth";
 
 
 export const websiteRouter = Router()
 
-websiteRouter.post("/",websiteController)
+websiteRouter.post("/",authMiddleware,addWebsite)
+websiteRouter.post("/status/:id",authMiddleware,websiteStatus)

@@ -6,7 +6,8 @@
     "@types/bun": "latest"
   },
   "exports": {
-    "./client": "./index.ts"
+    "./client": "./index.ts",
+    "./prisma": "./prisma.ts"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

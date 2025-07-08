@@ -66,7 +66,8 @@ describe("user signin", () => {
     let testUser: any
 
     beforeAll(async () => {
-
+        await resetDb()
+        
         await request(app).post("/api/v1/user/signup").send({
             email: "test@example.com",
             password: "ValidPass123!"

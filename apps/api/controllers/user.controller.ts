@@ -1,9 +1,9 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { userService } from "../services/user.service";
 import { userSigninSchema, userSignupSchema } from "@repo/zod-schemas";
 
 
-export const userSignup = async(req:Request,res:Response)=>{
+export const userSignup = async(req:Request,res:Response,next:NextFunction)=>{
     try{
 
         const payload = req.body
@@ -33,13 +33,11 @@ export const userSignup = async(req:Request,res:Response)=>{
             }
         }
         
-        res.status(500).json({
-            msg:"Internal Server Error"
-        })
+        next(e)
     }  
 }
 
-export const userSignin = async(req:Request,res:Response)=>{
+export const userSignin = async(req:Request,res:Response,next:NextFunction)=>{
     try{
 
         const payload = req.body
@@ -78,8 +76,6 @@ export const userSignin = async(req:Request,res:Response)=>{
             }
         }
         
-        res.status(500).json({
-            msg:"Internal Server Error"
-        })
+        next(e)
     }  
 }
