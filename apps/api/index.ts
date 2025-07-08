@@ -11,8 +11,8 @@ const port = process.env.PORT
 export const app = express();
 app.use(express.json())
 
-app.use("/api/v1/website",websiteRouter)
 app.use("/api/v1/user",userRouter)
+app.use("/api/v1/website",websiteRouter)
 app.use(errorHandler)
 
 app.listen(port,()=>{
