@@ -10,7 +10,9 @@ describe('Website gets created', () => {
     let testUserId: string;
     let testUser: any;
     
+
     beforeEach(async () => {
+
         await resetDb();
 
         await request(app).post('/api/v1/user/signup').send({
@@ -79,9 +81,8 @@ describe('GET /api/v1/website/status/:id', () => {
     let testUser2: any;
     let websiteId: string;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         await resetDb();
-
         await request(app).post('/api/v1/user/signup').send({
             email: 'test@example.com',
             password: 'ValidPass123!',

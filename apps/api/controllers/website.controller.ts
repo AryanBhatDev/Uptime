@@ -57,6 +57,8 @@ export const websiteStatus = async(req:Request,res:Response,next:NextFunction):P
 
         const response = await websiteService.websiteStatus(websiteId,userId);
 
+        console.log("response",response)
+
         res.status(200).json({
             response
         })
