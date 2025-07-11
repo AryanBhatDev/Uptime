@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv'
 import path from 'path'
 import { websiteRouter } from './routes/website.route';
