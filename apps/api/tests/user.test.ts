@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken'
 import prisma from "@repo/db/client"
-import { beforeAll, describe, expect, it} from 'bun:test'
+import { afterAll, beforeAll, beforeEach, describe, expect, it} from 'bun:test'
 import request from "supertest"
 import { app } from '..'
 import { resetDb } from './helpers/reset-db'
 
 describe("user gets created", () => {
     beforeAll(async()=>{
+        await resetDb()
+    })
+    afterAll(async()=>{
         await resetDb()
     })
     it("user not created with empty request body", async () => {
@@ -65,7 +68,7 @@ describe("user signin", () => {
     let testUserId: string
     let testUser: any
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         await resetDb()
         
         await request(app).post("/api/v1/user/signup").send({
@@ -82,6 +85,9 @@ describe("user signin", () => {
         testUserId = testUser.id
         
         validToken = jwt.sign({ id: testUserId }, process.env.JWT_SECRET)
+    })
+    afterAll(async()=>{
+        await resetDb()
     })
 
     it("user not signed in with empty request body", async () => {

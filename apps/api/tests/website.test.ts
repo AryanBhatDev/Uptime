@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import prisma from '@repo/db/client';
-import { beforeAll, beforeEach, describe, expect, it } from 'bun:test';
+import { afterAll, beforeEach, describe, expect, it } from 'bun:test';
 import request from 'supertest';
 import { app } from '..';
 import { resetDb } from './helpers/reset-db';
@@ -9,10 +9,8 @@ describe('Website gets created', () => {
     let validToken: string;
     let testUserId: string;
     let testUser: any;
-    
 
     beforeEach(async () => {
-
         await resetDb();
 
         await request(app).post('/api/v1/user/signup').send({
@@ -29,6 +27,9 @@ describe('Website gets created', () => {
         testUserId = testUser.id;
 
         validToken = jwt.sign({ id: testUserId }, process.env.JWT_SECRET);
+    });
+    afterAll(async () => {
+        await resetDb();
     });
 
     it('website not created if url is not present', async () => {
@@ -63,7 +64,7 @@ describe('Website gets created', () => {
             .post('/api/v1/website')
             .set('Authorization', `Bearer ${validToken}`)
             .send({ url: 'https://example.com' });
-        
+
         const res = await request(app)
             .post('/api/v1/website')
             .set('Authorization', `Bearer ${validToken}`)
@@ -95,7 +96,6 @@ describe('GET /api/v1/website/status/:id', () => {
         testUserId = testUser.id;
         validToken = jwt.sign({ id: testUserId }, process.env.JWT_SECRET);
 
-
         const websiteRes = await request(app)
             .post('/api/v1/website')
             .set('Authorization', `Bearer ${validToken}`)
@@ -103,7 +103,10 @@ describe('GET /api/v1/website/status/:id', () => {
 
         websiteId = websiteRes.body.website_id;
     });
-    
+    afterAll(async () => {
+        await resetDb();
+    });
+
     it('should fail without token', async () => {
         const res = await request(app).get(`/api/v1/website/status/${websiteId}`);
 
