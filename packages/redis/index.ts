@@ -47,7 +47,7 @@ export async function xReadGroup(
             id: '>',
         },
         {
-            COUNT: 500,
+            COUNT: 5,
         }
     );
     //@ts-ignore
