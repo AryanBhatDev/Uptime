@@ -2,18 +2,31 @@
 import React, { useState } from 'react';
 import { Shield, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+
+const userUrl = "http://localhost:3001/api/v1/user"
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Sign up:', formData);
+    try{
+        const response = await axios.post(`${userUrl}/signup`,{
+            email: formData.email,
+            password: formData.password
+        })
+        if(response){
+            router.push("/signin")
+        }
+    }catch(e){
+        console.log(e);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,17 +92,17 @@ export default function SignUpPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-2">
-                  Username
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
                 </label>
                 <input
                   type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
+                  id="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Choose a username"
+                  placeholder="Choose a email"
                   required
                 />
               </div>

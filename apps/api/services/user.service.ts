@@ -28,11 +28,15 @@ class UserService{
             token
         }
     }
-    async signin(id:string,password:string):Promise<Record<string,string>>{
+    async signin(data:{
+        email:string;
+        password:string;
+    }):Promise<Record<string,string>>{
 
+        const { email , password } = data
         const user = await prisma.user.findFirst({
             where:{
-                id
+                email
             }
         })
         if (!user){

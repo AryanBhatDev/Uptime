@@ -6,6 +6,6 @@ export const userRouter = Router()
 
 
 userRouter.post("/signup",userSignup)
-userRouter.post("/signin",authMiddleware,userSignin)
+userRouter.post("/signin",userSignin)
 userRouter.get("/websites",authMiddleware,getWebsites)
 

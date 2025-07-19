@@ -49,17 +49,7 @@ export const userSignin = async(req:Request,res:Response,next:NextFunction)=>{
             })
             return
         }
-
-        const userId = req.user?._id
-
-        if (!userId){
-            res.status(401).json({
-                msg:"Invalid token"
-            })
-            return
-        }
-
-        const token = await userService.signin(userId,validatedPayload.data.password)
+        const token = await userService.signin(validatedPayload.data)
         
         res.status(200).json({
             msg:"Signin successful",
