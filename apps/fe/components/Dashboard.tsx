@@ -38,7 +38,6 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch websites when component loads
   useEffect(() => {
     const fetchWebsites = async () => {
       try {
@@ -67,7 +66,10 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
     };
 
     fetchWebsites();
-  }, [setNewWebsite]);
+    const interval = setInterval(fetchWebsites, 30000);
+  
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAddWebsite = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +84,15 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
           }
         });
 
-        setWebsites([...websites, response.data]);
+        const newWebsiteData: Website = {
+          id: response.data.id || Date.now().toString(), 
+          status: "Checking", 
+          url: response.data.url || newWebsite.url,
+          responseTime: 0,
+          lastChecked: "Not checked" 
+        };
+
+        setWebsites([...websites, newWebsiteData]);
         setNewWebsite({ url: '' });
         setShowAddModal(false);
       } catch (err) {
@@ -101,7 +111,7 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
       case 'Checking':
         return <RefreshCcwIcon className="w-5 h-5 text-yellow-400 animate-spin" />;
       default:
-        return
+        return <AlertCircle className="w-5 h-5 text-gray-400" />;
     }
   };
 
@@ -115,7 +125,7 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
       case 'Checking':
         return `${baseClasses} bg-yellow-900/50 text-yellow-300 border border-yellow-500/30`;
       default:
-        return 
+        return `${baseClasses} bg-gray-900/50 text-gray-300 border border-gray-500/30`;
     }
   };
 
@@ -179,14 +189,14 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
             <h2 className="text-xl font-bold text-white">Monitored Websites</h2>
           </div>
           
-          <div className="overflow-x-auto">
-            <table className="w-full">
+           <div className="overflow-x-auto">
+            <table className="w-full table-fixed">
               <thead className="bg-gray-700/50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">Website</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">Status</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">Response Time</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">Last Checked</th>
+                  <th className="w-1/4 px-6 py-4 text-left text-sm font-medium text-gray-300">Website</th>
+                  <th className="w-1/4 px-6 py-4 text-left text-sm font-medium text-gray-300">Status</th>
+                  <th className="w-1/4 px-6 py-4 text-left text-sm font-medium text-gray-300">Response Time</th>
+                  <th className="w-1/4 px-6 py-4 text-left text-sm font-medium text-gray-300">Last Checked</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -215,8 +225,8 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
                       <td className="px-6 py-4">
                         <div>
                           <div className="text-sm text-gray-400 flex items-center space-x-1">
-                            <span>{website.url}</span>
-                            <ExternalLink className="w-3 h-3" />
+                            <span className="truncate">{website.url}</span>
+                            <ExternalLink className="w-3 h-3 flex-shrink-0" />
                           </div>
                         </div>
                       </td>
@@ -224,13 +234,13 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
                         <div className="flex items-center space-x-2">
                           {getStatusIcon(website.status)}
                           <span className={getStatusBadge(website.status)}>
-                            {website?.status?.charAt(0)?.toUpperCase() + website?.status?.slice(1)}
+                            {website.status ? website.status.charAt(0).toUpperCase() + website.status.slice(1) : 'Unknown'}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-white font-medium">
-                          {website.status === 'Down' ? '-' : `${website.responseTime}ms`}
+                          {website.status === 'down' ? '-' : `${website.responseTime}ms`}
                         </span>
                       </td>
                       <td className="px-6 py-4">
