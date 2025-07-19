@@ -80,17 +80,6 @@ function App() {
               Get instant alerts when your websites, APIs, or services go down. 
               Monitor from multiple locations worldwide with detailed analytics and lightning-fast notifications.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-1 flex items-center space-x-2 text-lg font-semibold">
-                <span>Start Monitoring Free</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="border-2 border-gray-600 text-gray-300 px-8 py-4 rounded-xl hover:border-gray-500 hover:text-white transition-all duration-300 flex items-center space-x-2 text-lg">
-                <Monitor className="w-5 h-5" />
-                <span>Watch Demo</span>
-              </button>
-            </div>
 
             {/* Dashboard Preview */}
             <div className="relative max-w-5xl mx-auto">
@@ -322,7 +311,7 @@ function App() {
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Shield className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">UpGuard</span>
+                <span className="text-xl font-bold">Uptime</span>
               </div>
               <p className="text-gray-400 mb-6 max-w-md">
                 Keep your digital infrastructure running smoothly with our comprehensive monitoring solutions.
@@ -362,7 +351,7 @@ function App() {
           </div>
           
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">© 2025 UpGuard. All rights reserved.</p>
+            <p className="text-gray-400">© 2025 Uptime. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy</a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms</a>

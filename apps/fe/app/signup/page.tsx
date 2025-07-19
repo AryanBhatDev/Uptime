@@ -17,13 +17,12 @@ export default function SignUpPage() {
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     try{
-        const response = await axios.post(`${userUrl}/signup`,{
-            email: formData.email,
-            password: formData.password
-        })
-        if(response){
-            router.push("/signin")
-        }
+      const response = await axios.post(`${userUrl}/signup`,{
+          email: formData.email,
+          password: formData.password
+      })
+      router.push("/signin")
+        
     }catch(e){
         console.log(e);
     }
@@ -56,7 +55,7 @@ export default function SignUpPage() {
           </h1>
           
           <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-            Join thousands of businesses that trust UpGuard to keep their websites 
+            Join thousands of businesses that trust UpTime to keep their websites 
             and services running smoothly with 99.9% uptime monitoring.
           </p>
           

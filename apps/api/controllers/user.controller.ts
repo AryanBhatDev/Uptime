@@ -74,7 +74,7 @@ export const getWebsites = async(req:Request,res:Response,next:NextFunction)=>{
     try{
 
         const userId = req.user?._id
-
+        console.log("userId",userId)
         if (!userId){
             res.status(401).json({
                 msg:"Invalid token"
@@ -83,6 +83,8 @@ export const getWebsites = async(req:Request,res:Response,next:NextFunction)=>{
         }
         
         const websites = await userService.getWebsites(userId)
+
+        console.log("after service call",websites)
         
         res.status(200).json({
             msg:"Websites",

@@ -61,8 +61,18 @@ class UserService{
         const websites = await prisma.website.findMany({
             where:{
                 user_id: id
+            },
+            include:{
+                ticks:{
+                    orderBy:[{
+                        created_at:'desc'
+                    }],
+                    take: 1
+                }
             }
         })
+
+        console.log("inside service",websites)
 
         return websites;
     }

@@ -21,10 +21,9 @@ export default function SignInPage() {
             email: formData.email,
             password: formData.password
         })
-        localStorage.setItem("token",response.data.token)
-        if(response){
-            router.push("/dashboard")
-        }
+        localStorage.setItem("token",response.data.token.token)      
+        router.push("/dashboard")
+
     }catch(e){
         console.log(e)
     }

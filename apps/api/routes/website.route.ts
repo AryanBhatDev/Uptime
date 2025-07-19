@@ -6,6 +6,6 @@ import { authMiddleware } from "../middlewares/auth";
 
 export const websiteRouter = Router()
 
-websiteRouter.post("/",authMiddleware,addWebsite)
+websiteRouter.post("/add",authMiddleware,addWebsite)
 
 websiteRouter.get("/status/:id",authMiddleware,websiteStatus)
