@@ -26,7 +26,7 @@ model website {
 model region {
   id     String         @id @default(uuid())
   name   String
-  tickes website_tick[]
+  ticks website_tick[]
 }
 
 model website_tick {

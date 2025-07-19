@@ -8,7 +8,6 @@ async function gatherWebsites(){
             id:true
         }
     })
-    console.log(websites)
     addToRedisInBulk(websites)
 }
 

@@ -7,6 +7,13 @@ type WebsiteAdd = {
     url: string;
     id: string;
 };
+type MessageType = {
+    id: string,
+    message: {
+        url: string,
+        id: string
+    }
+}
 const clientName = process.env.CLIENT_NAME!;
 
 const client = await createClient()
@@ -14,7 +21,6 @@ const client = await createClient()
     .connect();
 
 async function addToRedis({ url, id }: WebsiteAdd) {
-    console.log("url",url,"id",id)
     await client.xAdd(clientName, '*', {
         url,
         id,
@@ -27,4 +33,33 @@ export async function addToRedisInBulk(websites: WebsiteAdd[]) {
             id: websites[i].id,
         });
     }
+}
+
+export async function xReadGroup(
+    consumerGroup: string,
+    workerId: string
+): Promise<MessageType[] | undefined> {
+    const res = await client.xReadGroup(
+        consumerGroup,
+        workerId,
+        {
+            key: clientName,
+            id: '>',
+        },
+        {
+            COUNT: 5,
+        }
+    );
+    //@ts-ignore
+    const messages: MessageType[] | undefined = res[0].messages;
+    return messages;
+}
+
+async function xAck(consumerGroup: string, eventId: string) {
+    const res = await client.xAck(clientName, consumerGroup, eventId);
+    return res;
+}
+
+export async function xAckBulk(consumerGroup: string, eventIds: string[]){
+    eventIds.map(eventId => xAck(consumerGroup, eventId))
 }
