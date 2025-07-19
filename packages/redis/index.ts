@@ -47,17 +47,16 @@ export async function xReadGroup(
             id: '>',
         },
         {
-            COUNT: 5,
+            COUNT: 500,
         }
     );
     //@ts-ignore
-    const messages: MessageType[] | undefined = res[0].messages;
+    const messages: MessageType[] | undefined = res?.[0].messages;
     return messages;
 }
 
 async function xAck(consumerGroup: string, eventId: string) {
-    const res = await client.xAck(clientName, consumerGroup, eventId);
-    return res;
+    await client.xAck(clientName, consumerGroup, eventId);
 }
 
 export async function xAckBulk(consumerGroup: string, eventIds: string[]){

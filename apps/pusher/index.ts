@@ -11,5 +11,5 @@ async function gatherWebsites(){
     addToRedisInBulk(websites)
 }
 
-setInterval(gatherWebsites,3*60*100)
+setInterval(gatherWebsites,100)
 gatherWebsites()

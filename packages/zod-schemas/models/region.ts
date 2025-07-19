@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const countryNamesLower = [
-  'united states',
+  'usa',
   'india',
   'africa',
 ];
