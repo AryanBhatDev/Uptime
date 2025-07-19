@@ -240,7 +240,7 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-white font-medium">
-                          {website.status === 'down' ? '-' : `${website.responseTime}ms`}
+                          {website.status === 'Down' ? '-' : `${website.responseTime}ms`}
                         </span>
                       </td>
                       <td className="px-6 py-4">
