@@ -79,3 +79,35 @@ export const userSignin = async(req:Request,res:Response,next:NextFunction)=>{
         next(e)
     }  
 }
+
+export const getWebsites = async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+
+        const userId = req.user?._id
+
+        if (!userId){
+            res.status(401).json({
+                msg:"Invalid token"
+            })
+            return
+        }
+        
+        const websites = await userService.getWebsites(userId)
+        
+        res.status(200).json({
+            msg:"Websites",
+            websites
+        })
+    }catch(e){
+        
+        if ( e instanceof Error){
+            if (e.message.includes('not valid')){
+                res.status(401).json({
+                    msg: e.message
+                })
+                return
+            }
+        }
+        next(e)
+    }  
+}

@@ -14,9 +14,20 @@ import {
   Star
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import  SignInPage  from './signin/page';
+import SignUpPage from './signup/page';
 
 function App() {
   const router = useRouter()
+  const [currentPage, setCurrentPage] = React.useState('home');
+
+  if (currentPage === 'signin') {
+    return <SignInPage />;
+  }
+
+  if (currentPage === 'signup') {
+    return <SignUpPage />;
+  }
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Navigation */}

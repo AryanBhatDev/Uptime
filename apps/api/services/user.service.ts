@@ -51,6 +51,17 @@ class UserService{
             token
         }
     }
+
+    async getWebsites(id:string){
+
+        const websites = await prisma.website.findMany({
+            where:{
+                user_id: id
+            }
+        })
+
+        return websites;
+    }
 }
 
 export const userService = new UserService()
