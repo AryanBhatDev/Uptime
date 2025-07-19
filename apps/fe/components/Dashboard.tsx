@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Shield, 
-  Plus, 
-  CircleQuestionMark,
+  Plus,
+  RefreshCcwIcon,
   Globe, 
   AlertCircle,
   CheckCircle,
@@ -16,7 +16,7 @@ import { formatDateTime } from '@/utils/dateTime';
 
 interface Website {
   id:string;
-  status:"Up" | "Down" | "Unknown"
+  status:"Up" | "Down" | "Checking"
   url: string;
   responseTime: number;
   lastChecked: string;
@@ -98,8 +98,8 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
         return <CheckCircle className="w-5 h-5 text-green-400" />;
       case 'Down':
         return <XCircle className="w-5 h-5 text-red-400" />;
-      case 'Unknown':
-        return <CircleQuestionMark className="w-5 h-5 text-yellow-400" />;
+      case 'Checking':
+        return <RefreshCcwIcon className="w-5 h-5 text-yellow-400 animate-spin" />;
       default:
         return
     }
@@ -112,7 +112,7 @@ export default function DashboardComponent({onSignOut}: DashboardProps) {
         return `${baseClasses} bg-green-900/50 text-green-300 border border-green-500/30`;
       case 'Down':
         return `${baseClasses} bg-red-900/50 text-red-300 border border-red-500/30`;
-      case 'Unknown':
+      case 'Checking':
         return `${baseClasses} bg-yellow-900/50 text-yellow-300 border border-yellow-500/30`;
       default:
         return 
